@@ -9,15 +9,18 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.Timer;
-
+import java.util.Date;
 
 public class GamePanel extends JPanel {
     public static int counterPink=0;
     JPanel topPanel = new JPanel();
+    public int secondTime=0;
     JPanel mainBoardPanel = new JPanel();
-
+    public JLabel timeLabel = new JLabel();
     public static JLabel scoreValue = new JLabel ("Score: " + counterPink, SwingConstants.LEFT);
 
     GamePanel thisPanel = this;
@@ -25,7 +28,7 @@ public class GamePanel extends JPanel {
 
     public GamePanel(MainFrame parent, int numberOfFields, int bombsNumber) {
 
-        parent.setSize(655,838);
+        parent.setSize(655, 838);
         this.setBackground(Color.gray);
         this.setLayout(null);
         parent.getContentPane().add(this);
@@ -33,14 +36,16 @@ public class GamePanel extends JPanel {
         fields = new Field[numberOfFields];
 
 
-
-
-        mainBoardPanel.setLayout(new GridLayout((int)Math.sqrt(numberOfFields), (int)Math.sqrt(numberOfFields)));
+        mainBoardPanel.setLayout(new GridLayout((int) Math.sqrt(numberOfFields), (int) Math.sqrt(numberOfFields)));
 
         for (int i = 0; i < fields.length; i++) {
             fields[i] = new Field(i);
             mainBoardPanel.add(fields[i]);
         }
+
+
+
+
 
 
         mainBoardPanel.setBounds(0,160, 640,640);

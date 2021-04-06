@@ -12,9 +12,9 @@ public class StartGamePanel extends JPanel {
     JButton backToMenu = new JButton("Powrot");
     StartGamePanel thisPanel = this;
     JLabel fieldChoose = new JLabel("Wybierz rozmiar pola");
-    JSlider fieldSlider = new JSlider(0,25, 0);
+    JSlider fieldSlider = new JSlider(6,25, 6);
     JLabel valueSlider = new JLabel("Liczba kratek: " + fieldSlider.getValue());
-    JSlider numberBombs = new JSlider(0,20,0);
+    JSlider numberBombs = new JSlider(0,100,0);
     JLabel bombChoose = new JLabel("Wybierz ilosc bomb");
     JLabel valueBomb = new JLabel("Ilosc bomb: " + numberBombs.getValue());
     JLabel textofStartGame = new JLabel("Ilosc bomb jest wieksza od ilosci pol");

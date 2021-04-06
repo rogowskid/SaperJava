@@ -53,19 +53,24 @@ public class Field extends JPanel {
 
                 if (e.getButton() == MouseEvent.BUTTON1) //Left Mouse Button
                 {
+                    if (isChecked == false)
+                    {
+                        if(thisField.isBomb) {
+                            thisField.setBackground(Color.red);
+                            valueText.setText("");
+                            msgbox("Koniec gry");
 
-                    if(thisField.isBomb) {
-                        thisField.setBackground(Color.red);
-                        valueText.setText("");
-                        msgbox("Koniec gry");
 
-                    }else {
-                        thisField.setBackground(Color.PINK);
-                        valueText.setText(thisField.getValue()+"");
-                        GamePanel.counterPink++;
-                        GamePanel.scoreValue.setText("Score: " + GamePanel.counterPink);
+                        }else {
+                            thisField.setBackground(Color.PINK);
+                            valueText.setText(thisField.getValue()+"");
+                            GamePanel.counterPink++;
+                            GamePanel.scoreValue.setText("Score: " + GamePanel.counterPink);
+                        }
+
                     }
 
+                    isChecked=true;
                     thisField.add(valueText);
 
                 }else if (e.getButton() == MouseEvent.BUTTON3) //Right Mouse Button
