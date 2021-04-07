@@ -35,7 +35,7 @@ public class Field extends JPanel {
         return index;
     }
 
-    public Field(int index) {
+    public Field(int index, Stopwatch timer) {
         this.index = index;
         this.setBackground(Color.gray);
 
@@ -53,12 +53,18 @@ public class Field extends JPanel {
 
                 if (e.getButton() == MouseEvent.BUTTON1) //Left Mouse Button
                 {
+                    timer.tier.start();
+
                     if (isChecked == false)
                     {
                         if(thisField.isBomb) {
+                            timer.tier.stop();
                             thisField.setBackground(Color.red);
                             valueText.setText("");
                             msgbox("Koniec gry");
+
+                            System.out.println(timer.finalTime);
+
 
 
                         }else {
@@ -66,6 +72,8 @@ public class Field extends JPanel {
                             valueText.setText(thisField.getValue()+"");
                             GamePanel.counterPink++;
                             GamePanel.scoreValue.setText("Score: " + GamePanel.counterPink);
+
+
                         }
 
                     }

@@ -20,7 +20,9 @@ public class GamePanel extends JPanel {
     JPanel topPanel = new JPanel();
     public int secondTime=0;
     JPanel mainBoardPanel = new JPanel();
-    public JLabel timeLabel = new JLabel();
+    public String userName;
+    public Stopwatch timeLabel;
+
     public static JLabel scoreValue = new JLabel ("Score: " + counterPink, SwingConstants.LEFT);
 
     GamePanel thisPanel = this;
@@ -28,6 +30,7 @@ public class GamePanel extends JPanel {
 
     public GamePanel(MainFrame parent, int numberOfFields, int bombsNumber) {
 
+        timeLabel = new Stopwatch();
         parent.setSize(655, 838);
         this.setBackground(Color.gray);
         this.setLayout(null);
@@ -39,7 +42,7 @@ public class GamePanel extends JPanel {
         mainBoardPanel.setLayout(new GridLayout((int) Math.sqrt(numberOfFields), (int) Math.sqrt(numberOfFields)));
 
         for (int i = 0; i < fields.length; i++) {
-            fields[i] = new Field(i);
+            fields[i] = new Field(i, timeLabel);
             mainBoardPanel.add(fields[i]);
         }
 
@@ -57,11 +60,15 @@ public class GamePanel extends JPanel {
         topPanel.setLayout(null);
         topPanel.add(scoreValue);
 
+
+
+
+
         this.add(topPanel);
         scoreValue.setForeground(Color.white);
         scoreValue.setFont(new Font("Verdana", Font.PLAIN, 22));
         scoreValue.setBounds(0,130,200,20);
-
+        topPanel.add(timeLabel);
 
         generateBombs(fields,bombsNumber); //Tymczasowo 2 parametr
 

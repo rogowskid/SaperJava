@@ -17,33 +17,53 @@ public class StartGamePanel extends JPanel {
     JSlider numberBombs = new JSlider(0,100,0);
     JLabel bombChoose = new JLabel("Wybierz ilosc bomb");
     JLabel valueBomb = new JLabel("Ilosc bomb: " + numberBombs.getValue());
-    JLabel textofStartGame = new JLabel("Ilosc bomb jest wieksza od ilosci pol");
+    JLabel textofStartGame = new JLabel("The number of bombs is greater than the number of fields");
+    JLabel textofStarGame2 = new JLabel("The number of fields must be greater");
+
 
     private JButton startGame = new JButton("Start Game");
     private int numberOfFields;
 
     public StartGamePanel(MainFrame parent){
 
-        //this.setBackground(Color.blue);
+        this.setBackground(Color.darkGray);
         this.setLayout(null);
-        backToMenu.setBounds(500,50,100,50);
-        fieldChoose.setBounds(150,10,250,50);
-        fieldSlider.setBounds(150,60,100,20);
-        valueSlider.setBounds(150,80,250,20);
 
-        fieldChoose.setFont(new Font("Verdana",Font.PLAIN, 12));
-        valueSlider.setFont(new Font("Verdana",Font.PLAIN, 12));
+        fieldChoose.setBounds(50,10,250,50);
+        fieldSlider.setBounds(50,60,100,20);
+        valueSlider.setBounds(50,80,250,20);
 
 
-        numberBombs.setBounds(350,60,100,20);
-        bombChoose.setBounds(350,10,250,50);
-        valueBomb.setBounds(350, 80, 250,20);
-        bombChoose.setFont(new Font("Verdana",Font.PLAIN, 12));
-        valueBomb.setFont(new Font("Verdana",Font.PLAIN, 12));
-        startGame.setBounds(250, 400, 100,50);
+        fieldChoose.setFont(new Font("Verdana",Font.PLAIN, 18));
+        valueSlider.setFont(new Font("Verdana",Font.PLAIN, 18));
 
 
-        textofStartGame.setBounds(250,500,400,50);
+        valueSlider.setForeground(Color.white);
+        fieldChoose.setForeground(Color.white);
+        fieldSlider.setBackground(Color.darkGray);
+
+        numberBombs.setBounds(405,60,100,20);
+        bombChoose.setBounds(405,10,250,50);
+        valueBomb.setBounds(405, 80, 250,20);
+
+
+        bombChoose.setFont(new Font("Verdana",Font.PLAIN, 18));
+        valueBomb.setFont(new Font("Verdana",Font.PLAIN, 18));
+
+        bombChoose.setForeground(Color.white);
+        valueBomb.setForeground(Color.white);
+        numberBombs.setBackground(Color.darkGray);
+
+        startGame.setBounds(parent.getWidth()/2-50, 400, 100,50);
+        backToMenu.setBounds(parent.getWidth()/2-50,500,100,50);
+
+        textofStartGame.setBounds(parent.getWidth()/2-200,150,400,50);
+        textofStartGame.setFont(new Font("Verdana",Font.PLAIN, 12));
+        textofStartGame.setForeground(Color.white);
+
+        textofStarGame2.setBounds(parent.getWidth()/2-140,210,400,50);
+        textofStarGame2.setFont(new Font("Verdana",Font.PLAIN, 12));
+        textofStarGame2.setForeground(Color.white);
 
         this.add(startGame);
 
@@ -58,7 +78,9 @@ public class StartGamePanel extends JPanel {
 
         this.add(backToMenu);
         this.add(textofStartGame);
+        this.add(textofStarGame2);
         textofStartGame.setVisible(false);
+        textofStarGame2.setVisible(false);
         parent.getContentPane().add(this);
         parent.validate();
         parent.repaint();
@@ -103,6 +125,7 @@ public class StartGamePanel extends JPanel {
                 if(numberBombs.getValue()>numberOfFields)
                 {
                     textofStartGame.setVisible(true);
+                    textofStarGame2.setVisible(true);
 
                 }
 
