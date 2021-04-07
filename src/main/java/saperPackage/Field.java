@@ -1,55 +1,64 @@
 package saperPackage;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.apache.batik.swing.*;
-
 
 
 public class Field extends JPanel {
 
     private int index;
     private int value;
-
     private boolean isChecked = false;
-
     private boolean isBomb = false;
 
-
-    private void msgbox(String text)
-    {
-        JOptionPane.showMessageDialog(null, text, "Saper", JOptionPane.PLAIN_MESSAGE);
-    }
 
     private Field thisField = this;
     private JLabel valueText  = new JLabel(thisField.getValue()+"", SwingConstants.CENTER);
 
-    public int getIndex() {
-        return index;
-    }
+    //Flag SVG Image
+    JSVGCanvas svgCanvasFlag = new JSVGCanvas();
+    File flagImgFile = new File("src/main/resources/flag.svg");
+    URL urlImageFlag;
+    //Bomb SVG Image
+    JSVGCanvas svgCanvasBomb = new JSVGCanvas();
+    File bombImgFile = new File("src/main/resources/bomb.svg");
+    URL urlImageBomb;
 
-    public Field(int index, Stopwatch timer) {
+    public Field(int index, Stopwatch timer, GamePanel parent) {
         this.index = index;
         this.setBackground(Color.gray);
 
         this.setBorder(BorderFactory.createBevelBorder(1));
         this.setLayout(new GridLayout(1,1));
 
+        //Flag Icon
+        svgCanvasFlag.setBackground(Color.GRAY);
+        try {
+            urlImageFlag = flagImgFile.toURI().toURL();
+        } catch (MalformedURLException malformedURLException) {
+            malformedURLException.printStackTrace();
+        }
 
+        //Bomb Icon
+        svgCanvasBomb.setBackground(Color.darkGray);
+        try {
+            urlImageBomb = bombImgFile.toURI().toURL();
+        } catch (MalformedURLException malformedURLException) {
+            malformedURLException.printStackTrace();
+        }
 
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                System.out.println(thisField.getIndex());
-
 
                 if (e.getButton() == MouseEvent.BUTTON1) //Left Mouse Button
                 {
@@ -59,53 +68,47 @@ public class Field extends JPanel {
                     {
                         if(thisField.isBomb) {
                             timer.tier.stop();
-                            thisField.setBackground(Color.red);
+
+                            svgCanvasBomb.setURI(urlImageBomb.toString());
+                            thisField.add(svgCanvasBomb);
+
                             valueText.setText("");
-                            msgbox("Koniec gry");
 
                             System.out.println(timer.finalTime);
 
-
+                            parent.setGameOver(true);
 
                         }else {
-                            thisField.setBackground(Color.PINK);
+                            valueText.setFont(new Font("Verdana", Font.PLAIN, thisField.getWidth()/2));
                             valueText.setText(thisField.getValue()+"");
                             GamePanel.counterPink++;
                             GamePanel.scoreValue.setText("Score: " + GamePanel.counterPink);
-
-
+                            thisField.add(valueText);
                         }
 
                     }
 
                     isChecked=true;
-                    thisField.add(valueText);
 
-                }else if (e.getButton() == MouseEvent.BUTTON3) //Right Mouse Button
-                {
+                }else if (e.getButton() == MouseEvent.BUTTON3){ //Right Mouse Button Click
 
-                    JSVGCanvas svgCanvas = new JSVGCanvas();
-                    svgCanvas.setBackground(Color.GRAY);
-                    File f = new File("src/main/resources/flag.svg");
-
-                    thisField.add(svgCanvas);
-
-                    try {
-                        svgCanvas.setURI(f.toURL().toString());
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
+                    if(thisField.isChecked == false) {
+                        //Set a flag as a background of field
+                        svgCanvasFlag.setURI(urlImageFlag.toString());
+                        thisField.setLayout(null);
+                        svgCanvasFlag.setLocation((thisField.getWidth()/4)/2, (thisField.getHeight()/4)/2);
+                        svgCanvasFlag.setSize((int)(thisField.getWidth()*0.75), (int)(thisField.getHeight()*0.75));
+                        thisField.add(svgCanvasFlag);
                     }
-
                 }
-
                 validate();
                 repaint();
+
+                if(parent.isGameOver()) {
+                    msgbox("Koniec gry");
+                }
             }
-
-
         });
-
-
     }
 
     public int getValue() {
@@ -124,5 +127,13 @@ public class Field extends JPanel {
         isBomb = bomb;
     }
 
+    public int getIndex() {
+        return index;
+    }
+
+    private void msgbox(String text)
+    {
+        JOptionPane.showMessageDialog(null, text, "Saper", JOptionPane.PLAIN_MESSAGE);
+    }
 
 }
