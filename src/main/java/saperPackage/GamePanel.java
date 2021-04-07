@@ -23,6 +23,9 @@ public class GamePanel extends JPanel {
     public String userName;
     public Stopwatch timeLabel;
 
+    private boolean isGameOver = false;
+
+
     public static JLabel scoreValue = new JLabel ("Score: " + counterPink, SwingConstants.LEFT);
 
     GamePanel thisPanel = this;
@@ -42,7 +45,7 @@ public class GamePanel extends JPanel {
         mainBoardPanel.setLayout(new GridLayout((int) Math.sqrt(numberOfFields), (int) Math.sqrt(numberOfFields)));
 
         for (int i = 0; i < fields.length; i++) {
-            fields[i] = new Field(i, timeLabel);
+            fields[i] = new Field(i, timeLabel, thisPanel);
             mainBoardPanel.add(fields[i]);
         }
 
@@ -142,6 +145,14 @@ public class GamePanel extends JPanel {
             if(index == i)
                 return true;
         return false;
+    }
+
+    public boolean isGameOver() {
+        return isGameOver;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        isGameOver = gameOver;
     }
 
 }

@@ -32,7 +32,7 @@ public class Field extends JPanel {
     File bombImgFile = new File("src/main/resources/bomb.svg");
     URL urlImageBomb;
 
-    public Field(int index, Stopwatch timer) {
+    public Field(int index, Stopwatch timer, GamePanel parent) {
         this.index = index;
         this.setBackground(Color.gray);
 
@@ -73,9 +73,10 @@ public class Field extends JPanel {
                             thisField.add(svgCanvasBomb);
 
                             valueText.setText("");
-                            msgbox("Koniec gry");
 
                             System.out.println(timer.finalTime);
+
+                            parent.setGameOver(true);
 
                         }else {
                             valueText.setFont(new Font("Verdana", Font.PLAIN, thisField.getWidth()/2));
@@ -102,6 +103,10 @@ public class Field extends JPanel {
                 }
                 validate();
                 repaint();
+
+                if(parent.isGameOver()) {
+                    msgbox("Koniec gry");
+                }
             }
         });
     }
