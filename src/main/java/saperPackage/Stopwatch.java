@@ -30,7 +30,7 @@ public class Stopwatch extends JLabel {
             seconds_string = String.format("%02d", seconds);
             minutes_string = String.format("%02d", minutes);
             hours_string = String.format("%02d", hours);
-            thisLabel.setText(hours_string+":"+minutes_string+":"+seconds_string);
+            thisLabel.setText("Time: " + hours_string+":"+minutes_string+":"+seconds_string);
             finalTime = hours_string+":"+minutes_string+":"+seconds_string;
 
         }
@@ -41,11 +41,11 @@ public class Stopwatch extends JLabel {
     public Stopwatch() {
 
         this.setFont(new Font("Verdana", Font.PLAIN, 22));
-        this.setBounds(0,0,420,100);
+        this.setBounds(430,130,200,20);
         this.setForeground(Color.white);
         this.setBackground(Color.red);
         this.setHorizontalAlignment(SwingConstants.RIGHT);
-        this.setText(hours_string+":"+minutes_string+":"+seconds_string);
+        this.setText("Time: " + hours_string+":"+minutes_string+":"+seconds_string);
 
 
 

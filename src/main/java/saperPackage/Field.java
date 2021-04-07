@@ -60,53 +60,67 @@ public class Field extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
 
-                if (e.getButton() == MouseEvent.BUTTON1) //Left Mouse Button
-                {
-                    timer.tier.start();
+                if (parent.checkStatus==false) {
 
-                    if (isChecked == false)
+                    if (e.getButton() == MouseEvent.BUTTON1) //Left Mouse Button
                     {
-                        if(thisField.isBomb) {
-                            timer.tier.stop();
+                        timer.tier.start();
 
-                            svgCanvasBomb.setURI(urlImageBomb.toString());
-                            thisField.add(svgCanvasBomb);
+                        if (isChecked == false) {
+                            if (thisField.isBomb) {
+                                timer.tier.stop();
 
-                            valueText.setText("");
+                                svgCanvasBomb.setURI(urlImageBomb.toString());
+                                thisField.add(svgCanvasBomb);
 
-                            System.out.println(timer.finalTime);
+                                valueText.setText("");
 
-                            parent.setGameOver(true);
+                                System.out.println(timer.finalTime);
 
-                        }else {
-                            valueText.setFont(new Font("Verdana", Font.PLAIN, thisField.getWidth()/2));
-                            valueText.setText(thisField.getValue()+"");
-                            GamePanel.counterPink++;
-                            GamePanel.scoreValue.setText("Score: " + GamePanel.counterPink);
-                            thisField.add(valueText);
+                                parent.setGameOver(true);
+
+                            } else {
+                                valueText.setFont(new Font("Verdana", Font.PLAIN, thisField.getWidth() / 2));
+                                valueText.setText(thisField.getValue() + "");
+                                GamePanel.counterPink++;
+                                GamePanel.scoreValue.setText("Score: " + GamePanel.counterPink);
+                                thisField.add(valueText);
+                            }
+
+                        }
+
+                        isChecked = true;
+
+                    } else if (e.getButton() == MouseEvent.BUTTON3) { //Right Mouse Button Click
+
+                        if (parent.numflags > 0) {
+                            if (thisField.isChecked == false) {
+                                //Set a flag as a background of field
+                                svgCanvasFlag.setURI(urlImageFlag.toString());
+                                thisField.setLayout(null);
+                                svgCanvasFlag.setLocation((thisField.getWidth() / 4) / 2, (thisField.getHeight() / 4) / 2);
+                                svgCanvasFlag.setSize((int) (thisField.getWidth() * 0.75), (int) (thisField.getHeight() * 0.75));
+                                thisField.add(svgCanvasFlag);
+                                parent.numflags--;
+                                parent.numberOfflags.setText("Flags: " + parent.numflags);
+                            }
+                        }else
+                        {
+                            parent.numberOfflags.setText("Flags: " + 0);
+
                         }
 
                     }
-
-                    isChecked=true;
-
-                }else if (e.getButton() == MouseEvent.BUTTON3){ //Right Mouse Button Click
-
-                    if(thisField.isChecked == false) {
-                        //Set a flag as a background of field
-                        svgCanvasFlag.setURI(urlImageFlag.toString());
-                        thisField.setLayout(null);
-                        svgCanvasFlag.setLocation((thisField.getWidth()/4)/2, (thisField.getHeight()/4)/2);
-                        svgCanvasFlag.setSize((int)(thisField.getWidth()*0.75), (int)(thisField.getHeight()*0.75));
-                        thisField.add(svgCanvasFlag);
+                    validate();
+                    repaint();
+                    if (parent.isGameOver()) {
+                        timer.tier.stop();
+                        msgbox("Koniec gry");
                     }
-                }
-                validate();
-                repaint();
 
-                if(parent.isGameOver()) {
-                    msgbox("Koniec gry");
                 }
+
+
             }
         });
     }
@@ -131,7 +145,7 @@ public class Field extends JPanel {
         return index;
     }
 
-    private void msgbox(String text)
+    public static void msgbox(String text)
     {
         JOptionPane.showMessageDialog(null, text, "Saper", JOptionPane.PLAIN_MESSAGE);
     }

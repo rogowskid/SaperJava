@@ -22,8 +22,14 @@ public class GamePanel extends JPanel {
     JPanel mainBoardPanel = new JPanel();
     public String userName;
     public Stopwatch timeLabel;
-
-    private boolean isGameOver = false;
+    public JButton stopGame = new JButton("Stop");
+    public JButton pauseGame = new JButton("Pause");
+    public JButton startGame = new JButton("Start");
+    public JButton closeGame = new JButton("Close");
+    public JLabel numberOfflags = new JLabel();
+    public int numflags;
+    public boolean checkStatus = false;
+    public boolean isGameOver = false;
 
 
     public static JLabel scoreValue = new JLabel ("Score: " + counterPink, SwingConstants.LEFT);
@@ -41,6 +47,9 @@ public class GamePanel extends JPanel {
 
         fields = new Field[numberOfFields];
 
+        numflags = bombsNumber;
+
+
 
         mainBoardPanel.setLayout(new GridLayout((int) Math.sqrt(numberOfFields), (int) Math.sqrt(numberOfFields)));
 
@@ -53,6 +62,8 @@ public class GamePanel extends JPanel {
 
 
 
+        numberOfflags.setText("Flags: " + numflags);
+
 
         mainBoardPanel.setBounds(0,160, 640,640);
         mainBoardPanel.setBackground(Color.darkGray);
@@ -62,16 +73,29 @@ public class GamePanel extends JPanel {
         topPanel.setBackground(Color.darkGray);
         topPanel.setLayout(null);
         topPanel.add(scoreValue);
+        topPanel.add(numberOfflags);
+        pauseGame.setBounds(topPanel.getWidth()/2-50,10,100,30);
+        stopGame.setBounds(topPanel.getWidth()/2-50,60,100,30);
+        startGame.setBounds(topPanel.getWidth()/2-50,10,100,30);
+        closeGame.setBounds(topPanel.getWidth()/2-50,110,100,30);
 
-
-
-
-
+        startGame.setVisible(false);
+        closeGame.setVisible(false);
         this.add(topPanel);
         scoreValue.setForeground(Color.white);
         scoreValue.setFont(new Font("Verdana", Font.PLAIN, 22));
-        scoreValue.setBounds(0,130,200,20);
+        scoreValue.setBounds(0,130,200,30);
+
+        numberOfflags.setForeground(Color.white);
+        numberOfflags.setFont(new Font("Verdana", Font.PLAIN, 22));
+        numberOfflags.setBounds(0,70,200,30);
+
+
         topPanel.add(timeLabel);
+        topPanel.add(stopGame);
+        topPanel.add(pauseGame);
+        topPanel.add(startGame);
+        topPanel.add(closeGame);
 
         generateBombs(fields,bombsNumber); //Tymczasowo 2 parametr
 
@@ -80,7 +104,52 @@ public class GamePanel extends JPanel {
 
         parent.validate();
         parent.repaint();
+
+        pauseGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                timeLabel.tier.stop();
+                pauseGame.setVisible(false);
+                startGame.setVisible(true);
+                checkStatus = true;
+            }
+        });
+
+
+        startGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                timeLabel.tier.start();
+                pauseGame.setVisible(true);
+                startGame.setVisible(false);
+                checkStatus = false;
+            }
+        });
+
+        stopGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                timeLabel.tier.stop();
+                Field.msgbox("Koniec gry");
+                checkStatus=true;
+                closeGame.setVisible(true);
+            }
+        });
+
+        closeGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parent.getContentPane().remove(thisPanel);
+                new MenuPanel(parent);
+
+            }
+        });
+
     }
+
+
+
 
     public static void generateBombs(Field[] fields, int number_of_bombs){
         Random random = new Random();
@@ -154,5 +223,8 @@ public class GamePanel extends JPanel {
     public void setGameOver(boolean gameOver) {
         isGameOver = gameOver;
     }
+
+
+
 
 }

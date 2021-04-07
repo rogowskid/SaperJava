@@ -13,7 +13,8 @@ public class StartGamePanel extends JPanel {
     StartGamePanel thisPanel = this;
     JLabel fieldChoose = new JLabel("Wybierz rozmiar pola");
     JSlider fieldSlider = new JSlider(6,25, 6);
-    JLabel valueSlider = new JLabel("Liczba kratek: " + fieldSlider.getValue());
+
+    JLabel valueSlider = new JLabel("Liczba kratek: " + fieldSlider.getValue()*6);
     JSlider numberBombs = new JSlider(0,100,0);
     JLabel bombChoose = new JLabel("Wybierz ilosc bomb");
     JLabel valueBomb = new JLabel("Ilosc bomb: " + numberBombs.getValue());
@@ -22,7 +23,7 @@ public class StartGamePanel extends JPanel {
 
 
     private JButton startGame = new JButton("Start Game");
-    private int numberOfFields;
+    private int numberOfFields=36;
 
     public StartGamePanel(MainFrame parent){
 
@@ -105,6 +106,7 @@ public class StartGamePanel extends JPanel {
         fieldSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
+
                 numberOfFields = fieldSlider.getValue()*fieldSlider.getValue();
                 valueSlider.setText("Liczba kratek: " + numberOfFields);
             }
