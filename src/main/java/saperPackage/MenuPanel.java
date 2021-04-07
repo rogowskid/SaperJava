@@ -15,7 +15,7 @@ public class MenuPanel extends JPanel {
 
     public MenuPanel(MainFrame parent) {
         this.setLayout(null);
-        this.setBackground(Color.red);
+        this.setBackground(Color.darkGray);
 
         parent.getContentPane().add(this);
         parent.setSize(655,838);
@@ -56,8 +56,6 @@ public class MenuPanel extends JPanel {
                 System.exit(0);
             }
         });
-
-
 
     }
 }

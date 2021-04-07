@@ -107,7 +107,7 @@ public class StartGamePanel extends JPanel {
             @Override
             public void stateChanged(ChangeEvent e) {
 
-                numberOfFields = fieldSlider.getValue()*fieldSlider.getValue();
+                numberOfFields = fieldSlider.getValue()*fieldSlider.getValue(); //?
                 valueSlider.setText("Liczba kratek: " + numberOfFields);
             }
         });
