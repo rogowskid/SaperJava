@@ -77,7 +77,7 @@ public class Field extends JPanel {
                     if (e.getButton() == MouseEvent.BUTTON1){ //Left Mouse Button
                         timer.tier.start();
 
-                        if (isChecked == false) {
+                        if (isChecked == false) { //sprawdza czy mozemy nacisnac na to samo pole wiecej niz 1 raz
                             if (thisField.isBomb) {
                                 timer.tier.stop();
 
@@ -147,6 +147,11 @@ public class Field extends JPanel {
                     if (parent.isGameOver()) {
                         timer.tier.stop();
                         msgbox("Koniec gry");
+                        parent.closeGame.setVisible(true);
+                        parent.startGame.setVisible(false);
+                        parent.pauseGame.setVisible(false);
+                        parent.checkStatus=true;
+
                     }
                 }
             }
