@@ -28,8 +28,10 @@ public class GamePanel extends JPanel {
     public JButton closeGame = new JButton("Close");
     public JLabel numberOfflags = new JLabel();
     public int numflags;
+    public int numBombs;
     public boolean checkStatus = false;
     public boolean isGameOver = false;
+    private boolean afterFirstClick =false;
 
 
     public static JLabel scoreValue = new JLabel ("Score: " + counterPink, SwingConstants.LEFT);
@@ -46,12 +48,13 @@ public class GamePanel extends JPanel {
         parent.getContentPane().add(this);
 
         fields = new Field[numberOfFields];
+        numBombs =bombsNumber;
         numflags = bombsNumber;
 
         mainBoardPanel.setLayout(new GridLayout((int) Math.sqrt(numberOfFields), (int) Math.sqrt(numberOfFields)));
 
         for (int i = 0; i < fields.length; i++) {
-            fields[i] = new Field(timeLabel, thisPanel);
+            fields[i] = new Field(timeLabel, thisPanel, i);
             mainBoardPanel.add(fields[i]);
         }
 
@@ -89,10 +92,10 @@ public class GamePanel extends JPanel {
         topPanel.add(startGame);
         topPanel.add(closeGame);
 
-        generateBombs(fields,bombsNumber); //Tymczasowo 2 parametr
+//        generateBombs(fields,bombsNumber); //Tymczasowo 2 parametr
 
-        for(int i = 0; i < fields.length; i++)
-            fields[i].setValue(checkNeighbor(fields, i));
+//        for(int i = 0; i < fields.length; i++)
+//            fields[i].setValue(checkNeighbor(fields, i));
 
         parent.validate();
         parent.repaint();
@@ -149,7 +152,7 @@ public class GamePanel extends JPanel {
         for(int i = 0; i < number_of_bombs; i++){
             while (true){
                 randValue = random.nextInt(fields.length);
-                if(fields[randValue].isBomb()){
+                if(fields[randValue].isBomb() || fields[randValue].isCanBeBomb() == false){
                     continue;
                 }else{
                     fields[randValue].setBomb(true);
@@ -216,7 +219,54 @@ public class GamePanel extends JPanel {
         isGameOver = gameOver;
     }
 
+    public void firstClick(int index){
+        int lengthSqrt = (int)Math.sqrt(fields.length);
 
+        fields[index].setCanBeBomb(false);
 
+        //Po prawej
+        if( (index+1 < fields.length) && !isInLastColumn(index, fields.length))
+            fields[index+1].setCanBeBomb(false);
 
+        //Po lewej
+        if((index % lengthSqrt) != 0)
+            fields[index-1].setCanBeBomb(false);
+
+        //Dół
+        if((index + lengthSqrt) < fields.length)
+            fields[index + lengthSqrt].setCanBeBomb(false);
+
+        //Góra
+        if((index - lengthSqrt) >= 0)
+            fields[index - lengthSqrt].setCanBeBomb(false);
+
+        //Dół prawo
+        if((index + lengthSqrt+1) < fields.length && !isInLastColumn(index, fields.length))
+            fields[index + lengthSqrt + 1].setCanBeBomb(false);
+
+        //Doł lewo
+        if(index % lengthSqrt != 0  && (index + lengthSqrt-1) < fields.length)
+            fields[index + lengthSqrt - 1].setCanBeBomb(false);
+
+        //Góra prawo
+        if((index - lengthSqrt+1) >= 0 && !isInLastColumn(index, fields.length))
+            fields[index - lengthSqrt + 1].setCanBeBomb(false);
+
+        //Góra lewo
+        if((index - lengthSqrt-1) >= 0 && index % lengthSqrt != 0)
+            fields[index - lengthSqrt - 1].setCanBeBomb(false);
+
+        generateBombs(fields, numBombs);
+
+        for(int i = 0; i < fields.length; i++)
+            fields[i].setValue(checkNeighbor(fields, i));
+    }
+
+    public boolean isAfterFirstClick() {
+        return afterFirstClick;
+    }
+
+    public void setAfterFirstClick(boolean afterFirstClick) {
+        this.afterFirstClick = afterFirstClick;
+    }
 }

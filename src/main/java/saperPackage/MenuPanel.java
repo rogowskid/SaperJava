@@ -13,7 +13,7 @@ public class MenuPanel extends JPanel {
     MenuPanel thisPanel = this;
 
 
-    public MenuPanel(MainFrame parent) {
+    public  MenuPanel(MainFrame parent) {
         this.setLayout(null);
         this.setBackground(Color.darkGray);
 

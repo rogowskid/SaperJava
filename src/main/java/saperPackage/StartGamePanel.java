@@ -119,13 +119,11 @@ public class StartGamePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                if (numberBombs.getValue()<=numberOfFields)
+                if (numberBombs.getValue()<=numberOfFields - 9) //9 bo pierwszy klik
                 {
                     parent.getContentPane().remove(thisPanel);
                     new GamePanel(parent, numberOfFields, numberBombs.getValue());
-                }
-                if(numberBombs.getValue()>numberOfFields)
-                {
+                }else{
                     textofStartGame.setVisible(true);
                     textofStarGame2.setVisible(true);
 
