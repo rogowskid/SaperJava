@@ -34,7 +34,7 @@ public class GamePanel extends JPanel {
     private boolean afterFirstClick =false;
 
 
-    public static JLabel scoreValue = new JLabel ("Score: " + counterPink*0, SwingConstants.LEFT);
+    public static JLabel scoreValue = new JLabel ("Score: " + counterPink, SwingConstants.LEFT);
 
     GamePanel thisPanel = this;
     Field[] fields;
@@ -126,9 +126,7 @@ public class GamePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 isGameOver();
-
-                checkStatus=true;
-                closeGame.setVisible(true);
+                setCloseGame();
             }
         });
 
@@ -137,6 +135,7 @@ public class GamePanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 parent.getContentPane().remove(thisPanel);
                 new MenuPanel(parent);
+                counterPink=0;
 
             }
         });
@@ -211,12 +210,22 @@ public class GamePanel extends JPanel {
         return false;
     }
 
-    public boolean isGameOver() {
-        return isGameOver;
-    }
+    public boolean isGameOver() { return isGameOver; }
 
     public void setGameOver(boolean gameOver) {
         isGameOver = gameOver;
+    }
+
+    public void setCloseGame(){
+
+        timeLabel.tier.stop();
+        Field.msgbox("Koniec gry");
+        closeGame.setVisible(true);
+        startGame.setVisible(false);
+        pauseGame.setVisible(false);
+        checkStatus=true;
+        System.out.println("Score: " + GamePanel.counterPink);
+
     }
 
     public void firstClick(int index){

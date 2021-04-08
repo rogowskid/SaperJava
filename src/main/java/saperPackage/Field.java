@@ -111,6 +111,7 @@ public class Field extends JPanel {
                                     valueText.setText(thisField.getValue() + "");
                                 else
                                     valueText.setText("");
+
                                 GamePanel.counterPink++;
                                 GamePanel.scoreValue.setText("Score: " + GamePanel.counterPink);
                                 thisField.setBackground(Color.lightGray);
@@ -155,13 +156,10 @@ public class Field extends JPanel {
                     repaint();
 
                     if (parent.isGameOver()) {
-                        timer.tier.stop();
-                        msgbox("Koniec gry");
-                        parent.closeGame.setVisible(true);
-                        parent.startGame.setVisible(false);
-                        parent.pauseGame.setVisible(false);
-                        parent.checkStatus=true;
-                        System.out.println("Score: " + GamePanel.counterPink);
+
+                        System.out.println("end");
+                        parent.setCloseGame();
+
 
                     }
                 }

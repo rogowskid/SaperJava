@@ -127,6 +127,7 @@ public class StartGamePanel extends JPanel {
                     textofStartGame.setVisible(true);
                     textofStarGame2.setVisible(true);
 
+
                 }
 
             }
