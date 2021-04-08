@@ -13,11 +13,14 @@ import org.apache.batik.swing.*;
 
 
 public class Field extends JPanel {
-
+    private int intdex;
     private int value;
     private boolean isChecked = false;
     private boolean isBomb = false;
     private boolean hasFlag = false;
+
+
+    private boolean canBeBomb = true;
     private Field thisField = this;
     private JLabel valueText = new JLabel(thisField.getValue()+"", SwingConstants.CENTER);
 
@@ -30,10 +33,12 @@ public class Field extends JPanel {
     File bombImgFile = new File("src/main/resources/bomb.svg");
     URL urlImageBomb;
 
-    public Field(Stopwatch timer, GamePanel parent) {
+    public Field(Stopwatch timer, GamePanel parent, int index) {
         this.setBackground(Color.gray);
         this.setBorder(BorderFactory.createBevelBorder(1));
         this.setLayout(new GridLayout(1,1));
+
+        this.intdex = index;
 
         //Flag Icon
         svgCanvasFlag.setBackground(Color.GRAY);
@@ -72,10 +77,16 @@ public class Field extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
 
-                if (parent.checkStatus==false) {
+                if (parent.checkStatus == false) {
 
                     if (e.getButton() == MouseEvent.BUTTON1){ //Left Mouse Button
                         timer.tier.start();
+
+                        if(parent.isAfterFirstClick() == false){
+                            parent.firstClick(thisField.getIntdex());
+                            parent.setAfterFirstClick(true);
+                        }
+                            System.out.println(thisField.canBeBomb + " Index: " + thisField.getIntdex());
 
                         if (isChecked == false) { //sprawdza czy mozemy nacisnac na to samo pole wiecej niz 1 raz
                             if (thisField.isBomb) {
@@ -180,6 +191,18 @@ public class Field extends JPanel {
 
     public void setHasFlag(boolean hasFlag) {
         this.hasFlag = hasFlag;
+    }
+
+    public boolean isCanBeBomb() {
+        return canBeBomb;
+    }
+
+    public void setCanBeBomb(boolean canBeBomb) {
+        this.canBeBomb = canBeBomb;
+    }
+
+    public int getIntdex() {
+        return intdex;
     }
 
     public static void msgbox(String text)
