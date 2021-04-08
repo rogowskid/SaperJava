@@ -111,7 +111,6 @@ public class Field extends JPanel {
                                     valueText.setText(thisField.getValue() + "");
                                 else
                                     valueText.setText("");
-
                                 GamePanel.counterPink++;
                                 GamePanel.scoreValue.setText("Score: " + GamePanel.counterPink);
                                 thisField.setBackground(Color.lightGray);
@@ -162,6 +161,7 @@ public class Field extends JPanel {
                         parent.startGame.setVisible(false);
                         parent.pauseGame.setVisible(false);
                         parent.checkStatus=true;
+                        System.out.println("Score: " + GamePanel.counterPink);
 
                     }
                 }

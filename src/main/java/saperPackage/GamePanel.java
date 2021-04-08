@@ -34,7 +34,7 @@ public class GamePanel extends JPanel {
     private boolean afterFirstClick =false;
 
 
-    public static JLabel scoreValue = new JLabel ("Score: " + counterPink, SwingConstants.LEFT);
+    public static JLabel scoreValue = new JLabel ("Score: " + counterPink*0, SwingConstants.LEFT);
 
     GamePanel thisPanel = this;
     Field[] fields;
@@ -125,8 +125,8 @@ public class GamePanel extends JPanel {
         stopGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                timeLabel.tier.stop();
-                Field.msgbox("Koniec gry");
+                isGameOver();
+
                 checkStatus=true;
                 closeGame.setVisible(true);
             }
