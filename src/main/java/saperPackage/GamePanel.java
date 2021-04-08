@@ -46,24 +46,16 @@ public class GamePanel extends JPanel {
         parent.getContentPane().add(this);
 
         fields = new Field[numberOfFields];
-
         numflags = bombsNumber;
-
-
 
         mainBoardPanel.setLayout(new GridLayout((int) Math.sqrt(numberOfFields), (int) Math.sqrt(numberOfFields)));
 
         for (int i = 0; i < fields.length; i++) {
-            fields[i] = new Field(i, timeLabel, thisPanel);
+            fields[i] = new Field(timeLabel, thisPanel);
             mainBoardPanel.add(fields[i]);
         }
 
-
-
-
-
         numberOfflags.setText("Flags: " + numflags);
-
 
         mainBoardPanel.setBounds(0,160, 640,640);
         mainBoardPanel.setBackground(Color.darkGray);
