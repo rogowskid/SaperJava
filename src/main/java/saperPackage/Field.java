@@ -16,6 +16,8 @@ public class Field extends JPanel {
     private int intdex;
     private int value;
     private boolean isChecked = false;
+
+
     private boolean isBomb = false;
     private boolean hasFlag = false;
 
@@ -105,18 +107,18 @@ public class Field extends JPanel {
                                 parent.setGameOver(true);
 
                             } else {
-                                valueText.setFont(new Font("Verdana", Font.PLAIN, thisField.getWidth() / 2));
 
-                                if(thisField.getValue() != 0)
-                                    valueText.setText(thisField.getValue() + "");
-                                else
-                                    valueText.setText("");
+                                if(thisField.getValue() == 0) {
+                                    parent.selectEmptyFields(thisField.getIntdex());
+                                }
+
 
                                 GamePanel.counterPink++;
                                 GamePanel.scoreValue.setText("Score: " + GamePanel.counterPink);
-                                thisField.setBackground(Color.lightGray);
-                                thisField.setLayout(new GridLayout(1,1));
-                                thisField.add(valueText);
+
+                                if(thisField.getValue() != 0)
+                                    thisField.drawField();
+
                             }
 
                         }
@@ -167,6 +169,23 @@ public class Field extends JPanel {
         });
     }
 
+    public void drawField(){
+
+        valueText.setFont(new Font("Verdana", Font.PLAIN, thisField.getWidth() / 2));
+
+        if(thisField.getValue() != 0)
+            valueText.setText(thisField.getValue() + "");
+        else
+            valueText.setText("");
+
+        thisField.setBackground(Color.lightGray);
+        thisField.setLayout(new GridLayout(1,1));
+        thisField.add(valueText);
+
+        validate();
+        repaint();
+    }
+
     public int getValue() {
         return value;
     }
@@ -201,6 +220,14 @@ public class Field extends JPanel {
 
     public int getIntdex() {
         return intdex;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
     }
 
     public static void msgbox(String text)
