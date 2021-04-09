@@ -32,6 +32,7 @@ public class GamePanel extends JPanel {
     public boolean checkStatus = false;
     public boolean isGameOver = false;
     private boolean afterFirstClick =false;
+    private int numberOfFieldsSqrt;
 
 
     public static JLabel scoreValue = new JLabel ("Score: " + counterPink, SwingConstants.LEFT);
@@ -46,6 +47,8 @@ public class GamePanel extends JPanel {
         this.setBackground(Color.gray);
         this.setLayout(null);
         parent.getContentPane().add(this);
+
+        numberOfFieldsSqrt = (int)Math.sqrt(numberOfFields);
 
         scoreValue.setText("Score: 0");
 
@@ -275,6 +278,36 @@ public class GamePanel extends JPanel {
 
     public boolean isAfterFirstClick() {
         return afterFirstClick;
+    }
+
+    public void selectEmptyFields(int index){
+
+        if(fields[index].isChecked()){
+            return;
+        }
+
+        fields[index].setChecked(true);
+        fields[index].drawField();
+
+        if(fields[index].getValue() != 0){
+            return;
+        }
+
+        //Po prawej
+        if( (index+1 < fields.length) && !isInLastColumn(index, fields.length))
+            selectEmptyFields(index+1);
+
+        //Po lewej
+        if((index % numberOfFieldsSqrt) != 0)
+            selectEmptyFields(index-1);
+
+        //Dół
+        if((index + numberOfFieldsSqrt) < fields.length)
+            selectEmptyFields(index + numberOfFieldsSqrt);
+
+        //Góra
+        if((index - numberOfFieldsSqrt) >= 0)
+            selectEmptyFields(index - numberOfFieldsSqrt);
     }
 
     public void setAfterFirstClick(boolean afterFirstClick) {
