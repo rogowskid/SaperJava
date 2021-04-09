@@ -47,6 +47,8 @@ public class GamePanel extends JPanel {
         this.setLayout(null);
         parent.getContentPane().add(this);
 
+        scoreValue.setText("Score: 0");
+
         fields = new Field[numberOfFields];
         numBombs =bombsNumber;
         numflags = bombsNumber;
