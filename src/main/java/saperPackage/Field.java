@@ -20,7 +20,7 @@ public class Field extends JPanel {
 
     private boolean isBomb = false;
     private boolean hasFlag = false;
-
+    private int closeGameScore ;
 
     private boolean canBeBomb = true;
     private Field thisField = this;
@@ -103,7 +103,7 @@ public class Field extends JPanel {
                                 valueText.setText("");
 
                                 System.out.println(timer.finalTime);
-
+                                GamePanel.counterPink--;
                                 parent.setGameOver(true);
 
                             } else {
@@ -113,7 +113,7 @@ public class Field extends JPanel {
                                 }
 
 
-                                GamePanel.counterPink++;
+
                                 GamePanel.scoreValue.setText("Score: " + GamePanel.counterPink);
 
                                 if(thisField.getValue() != 0)
@@ -175,12 +175,14 @@ public class Field extends JPanel {
 
         if(thisField.getValue() != 0)
             valueText.setText(thisField.getValue() + "");
+
         else
             valueText.setText("");
-
+        GamePanel.counterPink++;
         thisField.setBackground(Color.lightGray);
         thisField.setLayout(new GridLayout(1,1));
         thisField.add(valueText);
+
 
         validate();
         repaint();
