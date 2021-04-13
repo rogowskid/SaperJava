@@ -90,7 +90,7 @@ public class Field extends JPanel {
                         }
                             System.out.println(thisField.canBeBomb + " Index: " + thisField.getIntdex());
 
-                        if (isChecked == false) { //sprawdza czy mozemy nacisnac na to samo pole wiecej niz 1 raz
+                        if (isChecked == false && thisField.isHasFlag() == false) { //sprawdza czy mozemy nacisnac na to samo pole wiecej niz 1 raz
                             if (thisField.isBomb) {
                                 timer.tier.stop();
 

@@ -308,6 +308,22 @@ public class GamePanel extends JPanel {
         //Góra
         if((index - numberOfFieldsSqrt) >= 0)
             selectEmptyFields(index - numberOfFieldsSqrt);
+
+        //Dół prawo
+        if((index + numberOfFieldsSqrt+1) < fields.length && !isInLastColumn(index, fields.length))
+            selectEmptyFields(index + numberOfFieldsSqrt + 1);
+
+        //Doł lewo
+        if(index % numberOfFieldsSqrt != 0  && (index + numberOfFieldsSqrt-1) < fields.length)
+            selectEmptyFields(index + numberOfFieldsSqrt - 1);
+
+        //Góra prawo
+        if((index - numberOfFieldsSqrt+1) >= 0 && !isInLastColumn(index, fields.length))
+            selectEmptyFields(index - numberOfFieldsSqrt + 1);
+
+        //Góra lewo
+        if((index - numberOfFieldsSqrt-1) >= 0 && index % numberOfFieldsSqrt != 0)
+            selectEmptyFields(index - numberOfFieldsSqrt - 1);
     }
 
     public void setAfterFirstClick(boolean afterFirstClick) {
