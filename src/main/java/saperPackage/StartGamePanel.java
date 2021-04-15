@@ -1,4 +1,5 @@
 package saperPackage;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.AncestorListener;
 import javax.swing.event.ChangeEvent;
@@ -6,6 +7,9 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class StartGamePanel extends JPanel {
 
@@ -25,10 +29,18 @@ public class StartGamePanel extends JPanel {
     private JButton startGame = new JButton("Start Game");
     private int numberOfFields=36;
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(MenuPanel.image, 0,0, this);
+
+    }
+
     public StartGamePanel(MainFrame parent){
 
         this.setBackground(Color.darkGray);
         this.setLayout(null);
+
 
         fieldChoose.setBounds(50,10,250,50);
         fieldSlider.setBounds(50,60,100,20);
@@ -41,7 +53,7 @@ public class StartGamePanel extends JPanel {
 
         valueSlider.setForeground(Color.white);
         fieldChoose.setForeground(Color.white);
-        fieldSlider.setBackground(Color.darkGray);
+        fieldSlider.setBackground(new Color(227,84,138));
 
         numberBombs.setBounds(405,60,100,20);
         bombChoose.setBounds(405,10,250,50);
@@ -53,7 +65,7 @@ public class StartGamePanel extends JPanel {
 
         bombChoose.setForeground(Color.white);
         valueBomb.setForeground(Color.white);
-        numberBombs.setBackground(Color.darkGray);
+        numberBombs.setBackground(new Color(217,83,134));
 
         startGame.setBounds(parent.getWidth()/2-50, 400, 100,50);
         backToMenu.setBounds(parent.getWidth()/2-50,500,100,50);

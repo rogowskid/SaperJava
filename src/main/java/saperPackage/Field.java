@@ -35,7 +35,7 @@ public class Field extends JPanel {
     File bombImgFile = new File("src/main/resources/bomb.svg");
     URL urlImageBomb;
 
-    public Field(Stopwatch timer, GamePanel parent, int index) {
+    public Field(Stopwatch timer, GamePanel parent, int index, int numberOfFields, int numberBombs) {
         this.setBackground(Color.gray);
         this.setBorder(BorderFactory.createBevelBorder(1));
         this.setLayout(new GridLayout(1,1));
@@ -57,6 +57,7 @@ public class Field extends JPanel {
                     System.out.println("flaga kliked!");
                     thisField.remove(svgCanvasFlag);
                     parent.numflags++;
+
                     thisField.setHasFlag(false);
                     parent.numberOfflags.setText("Flags: " + parent.numflags);
                     repaint();
@@ -78,6 +79,7 @@ public class Field extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+
 
                 if (parent.checkStatus == false) {
 
@@ -119,6 +121,7 @@ public class Field extends JPanel {
                                 if(thisField.getValue() != 0)
                                     thisField.drawField();
 
+
                             }
 
                         }
@@ -130,23 +133,37 @@ public class Field extends JPanel {
                         if (parent.numflags > 0) {
                             if (thisField.isChecked == false) {
 
+
                                 if(thisField.isHasFlag() == false) { //If flag is not set on the field
                                     //Set a flag as a background of field
+
                                     svgCanvasFlag.setURI(urlImageFlag.toString());
                                     thisField.setLayout(null);
                                     svgCanvasFlag.setLocation((thisField.getWidth() / 4) / 2, (thisField.getHeight() / 4) / 2);
                                     svgCanvasFlag.setSize((int) (thisField.getWidth() * 0.75), (int) (thisField.getHeight() * 0.75));
                                     thisField.add(svgCanvasFlag);
                                     parent.numflags--;
+                                    GamePanel.counterPink++;
+
+
+
                                     thisField.setHasFlag(true);
 
                                 }else{ //If flag is set on the field
                                     thisField.remove(svgCanvasFlag);
                                     parent.numflags++;
+                                    GamePanel.counterPink--;
+
+
+
+
+
+
                                     thisField.setHasFlag(false);
                                 }
 
                                 parent.numberOfflags.setText("Flags: " + parent.numflags);
+
                             }
                         }else{
                             parent.numberOfflags.setText("Flags: " + 0);
@@ -157,14 +174,27 @@ public class Field extends JPanel {
                     validate();
                     repaint();
 
+                    if(GamePanel.counterPink-parent.numflags==numberOfFields)
+                    {
+                        parent.setCloseGame(true); //true wygrana
+
+
+
+                    }
+
+
+
+
                     if (parent.isGameOver()) {
 
                         System.out.println("end");
-                        parent.setCloseGame();
+                        parent.setCloseGame(false); //false przegrana
+
 
 
                     }
                 }
+
             }
         });
     }
@@ -182,6 +212,8 @@ public class Field extends JPanel {
         thisField.setBackground(Color.lightGray);
         thisField.setLayout(new GridLayout(1,1));
         thisField.add(valueText);
+
+
 
 
         validate();
@@ -236,5 +268,7 @@ public class Field extends JPanel {
     {
         JOptionPane.showMessageDialog(null, text, "Saper", JOptionPane.PLAIN_MESSAGE);
     }
+
+
 
 }

@@ -59,7 +59,7 @@ public class GamePanel extends JPanel {
         mainBoardPanel.setLayout(new GridLayout((int) Math.sqrt(numberOfFields), (int) Math.sqrt(numberOfFields)));
 
         for (int i = 0; i < fields.length; i++) {
-            fields[i] = new Field(timeLabel, thisPanel, i);
+            fields[i] = new Field(timeLabel, thisPanel, i, numberOfFields, bombsNumber);
             mainBoardPanel.add(fields[i]);
         }
 
@@ -131,7 +131,7 @@ public class GamePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 isGameOver();
-                setCloseGame();
+                setCloseGame(false);
             }
         });
 
@@ -221,15 +221,26 @@ public class GamePanel extends JPanel {
         isGameOver = gameOver;
     }
 
-    public void setCloseGame(){
+    public void setCloseGame(boolean check){
 
         timeLabel.tier.stop();
-        Field.msgbox("Koniec gry");
+
         closeGame.setVisible(true);
         startGame.setVisible(false);
         pauseGame.setVisible(false);
         checkStatus=true;
         System.out.println("Score: " + GamePanel.counterPink);
+
+        if(check==false)
+        {
+            Field.msgbox("Koniec gry");
+
+        }
+        if (check==true)
+        {
+            Field.msgbox("Koniec gry! Wygrales, twój wynik: " + GamePanel.counterPink);
+
+        }
 
     }
 

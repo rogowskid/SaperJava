@@ -22,7 +22,7 @@ public class MenuPanel extends JPanel {
     JButton rankingPanel;
     MenuPanel thisPanel = this;
 
-    BufferedImage image;
+    static BufferedImage image;
 
     @Override
     protected void paintComponent(Graphics g) {
