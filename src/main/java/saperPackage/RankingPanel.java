@@ -12,6 +12,7 @@ public class RankingPanel extends JPanel {
     JTable rankingTable;
     RankingPanel thisPanel = this;
     Object[] columnsTitles = {"Nick", "Punkty", "Rozmiar", "Liczba Bomb", "Czas"};
+    Ranking ranking = new Ranking();
 
     public RankingPanel(MainFrame parent) {
 
@@ -23,7 +24,6 @@ public class RankingPanel extends JPanel {
         this.add(backToMenu);
         parent.getContentPane().add(this);
 
-        Ranking ranking = new Ranking();
         ranking.loadFromFile("src/main/java/saperPackage/ranking.csv");
 
         Object[][] rowData = new Object[ranking.getListaRankingowa().size()][5];

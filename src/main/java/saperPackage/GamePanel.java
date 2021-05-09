@@ -33,6 +33,8 @@ public class GamePanel extends JPanel {
     public boolean isGameOver = false;
     private boolean afterFirstClick =false;
     private int numberOfFieldsSqrt;
+    private String playerNickname;
+    private JLabel nickLabel;
 
 
     public static JLabel scoreValue = new JLabel ("Score: " + counterPink, SwingConstants.LEFT);
@@ -40,7 +42,11 @@ public class GamePanel extends JPanel {
     GamePanel thisPanel = this;
     Field[] fields;
 
-    public GamePanel(MainFrame parent, int numberOfFields, int bombsNumber) {
+    public GamePanel(MainFrame parent, int numberOfFields, int bombsNumber, String playerNickname) {
+
+        this.playerNickname = playerNickname;
+
+
 
         timeLabel = new Stopwatch();
         parent.setSize(655, 838);
@@ -57,6 +63,15 @@ public class GamePanel extends JPanel {
         numflags = bombsNumber;
 
         mainBoardPanel.setLayout(new GridLayout((int) Math.sqrt(numberOfFields), (int) Math.sqrt(numberOfFields)));
+
+
+        nickLabel = new JLabel("Nick: " + playerNickname);
+        nickLabel.setBounds(0, 10, 200, 40);
+        nickLabel.setForeground(Color.white);
+        nickLabel.setFont(new Font("Verdana", Font.PLAIN, 22));
+
+        this.add(nickLabel);
+
 
         for (int i = 0; i < fields.length; i++) {
             fields[i] = new Field(timeLabel, thisPanel, i, numberOfFields, bombsNumber);
