@@ -36,18 +36,17 @@ public class Stopwatch extends JLabel {
         }
     });
 
-
-
     public Stopwatch() {
-
         this.setFont(new Font("Verdana", Font.PLAIN, 22));
         this.setBounds(430,130,200,20);
         this.setForeground(Color.white);
         this.setBackground(Color.red);
         this.setHorizontalAlignment(SwingConstants.RIGHT);
         this.setText("Time: " + hours_string+":"+minutes_string+":"+seconds_string);
-
-
-
     }
+
+    public int getTimeInSeconds(){
+        return hours * 3600 + minutes * 60 + seconds;
+    }
+
 }

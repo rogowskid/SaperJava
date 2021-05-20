@@ -7,6 +7,8 @@ public class MainFrame extends JFrame {
 
     public MainFrame(){
 
+        RankingPanel.ranking.loadFromFile("src/main/java/saperPackage/ranking.csv");
+
         this.setBounds(200,200,300,400);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Saper");

@@ -20,7 +20,6 @@ public class GamePanel extends JPanel {
     JPanel topPanel = new JPanel();
     public int secondTime=0;
     JPanel mainBoardPanel = new JPanel();
-    public String userName;
     public Stopwatch timeLabel;
     public JButton stopGame = new JButton("Stop");
     public JButton pauseGame = new JButton("Pause");
@@ -33,6 +32,9 @@ public class GamePanel extends JPanel {
     public boolean isGameOver = false;
     private boolean afterFirstClick =false;
     private int numberOfFieldsSqrt;
+    private int numberOfFields;
+    private String playerNickname;
+    private JLabel nickLabel;
 
 
     public static JLabel scoreValue = new JLabel ("Score: " + counterPink, SwingConstants.LEFT);
@@ -40,7 +42,11 @@ public class GamePanel extends JPanel {
     GamePanel thisPanel = this;
     Field[] fields;
 
-    public GamePanel(MainFrame parent, int numberOfFields, int bombsNumber) {
+    public GamePanel(MainFrame parent, int numberOfFields, int bombsNumber, String playerNickname) {
+
+        this.playerNickname = playerNickname;
+
+
 
         timeLabel = new Stopwatch();
         parent.setSize(655, 838);
@@ -48,6 +54,7 @@ public class GamePanel extends JPanel {
         this.setLayout(null);
         parent.getContentPane().add(this);
 
+        this.numberOfFields = numberOfFields;
         numberOfFieldsSqrt = (int)Math.sqrt(numberOfFields);
 
         scoreValue.setText("Score: 0");
@@ -57,6 +64,15 @@ public class GamePanel extends JPanel {
         numflags = bombsNumber;
 
         mainBoardPanel.setLayout(new GridLayout((int) Math.sqrt(numberOfFields), (int) Math.sqrt(numberOfFields)));
+
+
+        nickLabel = new JLabel("Nick: " + playerNickname);
+        nickLabel.setBounds(0, 10, 200, 40);
+        nickLabel.setForeground(Color.white);
+        nickLabel.setFont(new Font("Verdana", Font.PLAIN, 22));
+
+        this.add(nickLabel);
+
 
         for (int i = 0; i < fields.length; i++) {
             fields[i] = new Field(timeLabel, thisPanel, i, numberOfFields, bombsNumber);
@@ -147,9 +163,6 @@ public class GamePanel extends JPanel {
 
     }
 
-
-
-
     public static void generateBombs(Field[] fields, int number_of_bombs){
         Random random = new Random();
         int randValue;
@@ -223,12 +236,19 @@ public class GamePanel extends JPanel {
 
     public void setCloseGame(boolean check){
 
+        System.out.println(timeLabel.getTimeInSeconds());
+
+        RankingPanel.ranking.addElement(new RankingElement(playerNickname, counterPink, numberOfFields, numBombs, timeLabel.getTimeInSeconds()));
+        RankingPanel.ranking.saveToFile("src/main/java/saperPackage/ranking.csv");
+        System.out.println(RankingPanel.ranking.toString());
+
+
         timeLabel.tier.stop();
 
         closeGame.setVisible(true);
         startGame.setVisible(false);
         pauseGame.setVisible(false);
-        checkStatus=true;
+        checkStatus= true;
         System.out.println("Score: " + GamePanel.counterPink);
 
         if(check==false)

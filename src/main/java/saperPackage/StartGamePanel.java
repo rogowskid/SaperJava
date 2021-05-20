@@ -25,6 +25,9 @@ public class StartGamePanel extends JPanel {
     JLabel textofStartGame = new JLabel("The number of bombs is greater than the number of fields");
     JLabel textofStarGame2 = new JLabel("The number of fields must be greater");
 
+    JLabel nickInputText = new JLabel("Wprowadź nick: ");
+    JTextField nickField = new JTextField();
+    String playerNickname;
 
     private JButton startGame = new JButton("Start Game");
     private int numberOfFields=36;
@@ -77,6 +80,21 @@ public class StartGamePanel extends JPanel {
         textofStarGame2.setBounds(parent.getWidth()/2-140,210,400,50);
         textofStarGame2.setFont(new Font("Verdana",Font.PLAIN, 12));
         textofStarGame2.setForeground(Color.white);
+
+        //Input nickname label
+        nickInputText.setBounds(parent.getWidth()/2-100, 250, 200,40);
+        nickInputText.setHorizontalAlignment(JLabel.CENTER);
+        nickInputText.setFont(new Font("Verdana",Font.BOLD, 16));
+        this.add(nickInputText);
+
+        //Nickname field
+        nickField.setBounds(parent.getWidth()/2-100, 300, 200,40);
+        nickField.setHorizontalAlignment(JLabel.CENTER);
+        nickField.setFont(new Font("Verdana",Font.BOLD, 16));
+        this.add(nickField);
+
+
+
 
         this.add(startGame);
 
@@ -134,7 +152,8 @@ public class StartGamePanel extends JPanel {
                 if (numberBombs.getValue()<=numberOfFields - 9) //9 bo pierwszy klik
                 {
                     parent.getContentPane().remove(thisPanel);
-                    new GamePanel(parent, numberOfFields, numberBombs.getValue());
+                    playerNickname = nickField.getText();
+                    new GamePanel(parent, numberOfFields, numberBombs.getValue(), playerNickname);
                 }else{
                     textofStartGame.setVisible(true);
                     textofStarGame2.setVisible(true);
