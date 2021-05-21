@@ -36,11 +36,13 @@ public class RankingPanel extends JPanel {
             rowData[i][3] = ranking.getListaRankingowa().get(i).getNumberOfBombs();
             rowData[i][4] = ranking.getListaRankingowa().get(i).getSeconds();
         }
+
         rankingTable = new JTable(rowData, columnsTitles){
             public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 return false;
             }
         };
+
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
