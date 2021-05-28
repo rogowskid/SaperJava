@@ -22,8 +22,8 @@ public class StartGamePanel extends JPanel {
     JSlider numberBombs = new JSlider(0,100,0);
     JLabel bombChoose = new JLabel("Wybierz ilosc bomb");
     JLabel valueBomb = new JLabel("Ilosc bomb: " + numberBombs.getValue());
-    JLabel textofStartGame = new JLabel("The number of bombs is greater than the number of fields");
-    JLabel textofStarGame2 = new JLabel("The number of fields must be greater");
+    JLabel textofStartGame = new JLabel("Liczba bomb jest za duża!");
+    JLabel emptyNicknameLabel = new JLabel("Nick gracza nie może być pusty!");
 
     JLabel nickInputText = new JLabel("Wprowadź nick: ");
     JTextField nickField = new JTextField();
@@ -75,13 +75,14 @@ public class StartGamePanel extends JPanel {
         startGame.setBounds(parent.getWidth()/2-50, 400, 100,50);
         backToMenu.setBounds(parent.getWidth()/2-50,500,100,50);
 
-        textofStartGame.setBounds(parent.getWidth()/2-200,150,400,50);
-        textofStartGame.setFont(new Font("Verdana",Font.PLAIN, 12));
-        textofStartGame.setForeground(Color.white);
+        textofStartGame.setBounds(0, 150, parent.getWidth(), 50);
+        textofStartGame.setHorizontalAlignment(JLabel.CENTER);
+        textofStartGame.setFont(new Font("Verdana",Font.BOLD, 16));
 
-        textofStarGame2.setBounds(parent.getWidth()/2-140,210,400,50);
-        textofStarGame2.setFont(new Font("Verdana",Font.PLAIN, 12));
-        textofStarGame2.setForeground(Color.white);
+        //Empty nickname label
+        emptyNicknameLabel.setBounds(0, 210, parent.getWidth(), 50);
+        emptyNicknameLabel.setHorizontalAlignment(JLabel.CENTER);
+        emptyNicknameLabel.setFont(new Font("Verdana",Font.BOLD, 16));
 
         //Input nickname label
         nickInputText.setBounds(parent.getWidth()/2-100, 250, 200,40);
@@ -111,9 +112,7 @@ public class StartGamePanel extends JPanel {
 
         this.add(backToMenu);
         this.add(textofStartGame);
-        this.add(textofStarGame2);
         textofStartGame.setVisible(false);
-        textofStarGame2.setVisible(false);
         parent.getContentPane().add(this);
         parent.validate();
         parent.repaint();
@@ -150,17 +149,22 @@ public class StartGamePanel extends JPanel {
         startGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+
+                if(nickField.getText().equals("")){
+                    thisPanel.add(emptyNicknameLabel);
+                    parent.repaint();
+                    parent.validate();
+                    return;
+                }
+
                 if (numberBombs.getValue()<=numberOfFields - 9) //9 bo pierwszy klik
                 {
                     parent.getContentPane().remove(thisPanel);
                     playerNickname = nickField.getText();
                     new GamePanel(parent, numberOfFields, numberBombs.getValue(), playerNickname);
                 }else{
+                    thisPanel.remove(emptyNicknameLabel);
                     textofStartGame.setVisible(true);
-                    textofStarGame2.setVisible(true);
-
-
                 }
 
             }

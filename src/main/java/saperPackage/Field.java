@@ -96,11 +96,7 @@ public class Field extends JPanel {
                             if (thisField.isBomb) {
                                 timer.tier.stop();
 
-                                svgCanvasBomb.setURI(urlImageBomb.toString());
-                                thisField.setLayout(null);
-                                svgCanvasBomb.setLocation((thisField.getWidth() / 4) / 2, (thisField.getHeight() / 4) / 2);
-                                svgCanvasBomb.setSize((int) (thisField.getWidth() * 0.75), (int) (thisField.getHeight() * 0.75));
-                                thisField.add(svgCanvasBomb);
+                                thisField.drawBomb();
 
                                 valueText.setText("");
 
@@ -205,16 +201,18 @@ public class Field extends JPanel {
 
         if(thisField.getValue() != 0)
             valueText.setText(thisField.getValue() + "");
-
         else
             valueText.setText("");
+
+        if(thisField.getValue() == -1){
+            thisField.drawBomb();
+            return;
+        }
+
         GamePanel.counterPink++;
         thisField.setBackground(Color.lightGray);
         thisField.setLayout(new GridLayout(1,1));
         thisField.add(valueText);
-
-
-
 
         validate();
         repaint();
@@ -269,6 +267,12 @@ public class Field extends JPanel {
         JOptionPane.showMessageDialog(null, text, "Saper", JOptionPane.PLAIN_MESSAGE);
     }
 
-
+    private void drawBomb(){
+        svgCanvasBomb.setURI(urlImageBomb.toString());
+        thisField.setLayout(null);
+        svgCanvasBomb.setLocation((thisField.getWidth() / 4) / 2, (thisField.getHeight() / 4) / 2);
+        svgCanvasBomb.setSize((int) (thisField.getWidth() * 0.75), (int) (thisField.getHeight() * 0.75));
+        thisField.add(svgCanvasBomb);
+    }
 
 }

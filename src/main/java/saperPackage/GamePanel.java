@@ -254,11 +254,13 @@ public class GamePanel extends JPanel {
         if(check==false)
         {
             Field.msgbox("Koniec gry");
+            drawAllFields();
 
         }
         if (check==true)
         {
             Field.msgbox("Koniec gry! Wygrales, twój wynik: " + GamePanel.counterPink);
+            drawAllFields();
 
         }
 
@@ -355,6 +357,12 @@ public class GamePanel extends JPanel {
         //Góra lewo
         if((index - numberOfFieldsSqrt-1) >= 0 && index % numberOfFieldsSqrt != 0)
             selectEmptyFields(index - numberOfFieldsSqrt - 1);
+    }
+
+    private void drawAllFields(){
+        for(Field i : fields)
+            if(i.isChecked() == false && i.isHasFlag() == false)
+                i.drawField();
     }
 
     public void setAfterFirstClick(boolean afterFirstClick) {
