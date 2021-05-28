@@ -18,7 +18,9 @@ public class RankingPanel extends JPanel {
     public static Ranking ranking = new Ranking();
     private MainFrame parent;
     private JScrollPane scrollPane;
-    private JLabel sortingByLablel = new JLabel("Sortuj wegług: ");
+    private JLabel sortingByLablel = new JLabel("Sortuj według: ");
+    private boolean growingSort = false;
+    private JCheckBox setSortOption = new JCheckBox("Sortowanie rosnące");
 
     public RankingPanel(MainFrame parent) {
 
@@ -38,6 +40,24 @@ public class RankingPanel extends JPanel {
         sortingByLablel.setFont(new Font("Verdana",Font.BOLD, 16));
         this.add(sortingByLablel);
 
+
+        setSortOption.setBounds(80,500, 250, 50);
+        setSortOption.setHorizontalAlignment(JLabel.CENTER);
+        setSortOption.setHorizontalTextPosition(SwingConstants.LEFT);
+        setSortOption.setFont(new Font("Verdana",Font.BOLD, 16));
+        setSortOption.setOpaque(false);
+
+
+
+        setSortOption.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               growingSort =  ((JCheckBox)e.getSource()).isSelected();
+            }
+        });
+
+        this.add(setSortOption);
+
         sortList = new JComboBox(options);
         this.add(sortList);
         sortList.setBounds(parent.getWidth() / 2 - 70,450,140,50);
@@ -45,7 +65,7 @@ public class RankingPanel extends JPanel {
         sortList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sortTable(((JComboBox)e.getSource()).getSelectedItem().toString());
+                sortTable(((JComboBox)e.getSource()).getSelectedItem().toString(), growingSort);
             }
         });
 
@@ -58,7 +78,6 @@ public class RankingPanel extends JPanel {
         for(int i = 0; i < 5; i++) {
             rankingTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
-
         scrollPane = new JScrollPane(rankingTable);
         rankingTable.setFillsViewportHeight(true);
         thisPanel.add(scrollPane);
@@ -79,16 +98,16 @@ public class RankingPanel extends JPanel {
         });
     }
 
-    private void  sortTable(String option){
+    private void  sortTable(String option, boolean flag){
 
         if(option.equals(options[0])) {
-            ranking.selectionSort(Ranking.BY_SCORE, false);
+            ranking.selectionSort(Ranking.BY_SCORE, flag);
         }else if(option.equals(options[1])){
-            ranking.selectionSort(Ranking.BY_BORDER_SIZE, false);
+            ranking.selectionSort(Ranking.BY_BORDER_SIZE, flag);
         }else if(option.equals(options[2])){
-            ranking.selectionSort(Ranking.BY_NUMBER_OF_BOMBS, false);
+            ranking.selectionSort(Ranking.BY_NUMBER_OF_BOMBS, flag);
         }else if(option.equals(options[3])){
-            ranking.selectionSort(Ranking.BY_TIME, false);
+            ranking.selectionSort(Ranking.BY_TIME, flag);
         }
 
         rankingTable = null;

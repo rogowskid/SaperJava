@@ -44,6 +44,8 @@ public class StartGamePanel extends JPanel {
         this.setBackground(Color.darkGray);
         this.setLayout(null);
 
+        backToMenu = ButtonPainter.paintButton(backToMenu);
+        startGame = ButtonPainter.paintButton(startGame);
 
         fieldChoose.setBounds(50,10,250,50);
         fieldSlider.setBounds(50,60,100,20);
