@@ -16,19 +16,19 @@ public class Ranking {
     private List<RankingElement> listaRankingowa;
 
     /**
-     * Stala uzywana podczas wykonywania sorttownia (sortownia wg. punktow)
+     * Stala uzywana podczas wykonywania sortownia (sortownia wg. punktow)
      */
     public static final int BY_SCORE = 1;
     /**
-     * Stala uzywana podczas wykonywania sorttownia (sortownia wg. rozmiaru planszy)
+     * Stala uzywana podczas wykonywania sortownia (sortownia wg. rozmiaru planszy)
      */
     public static final int BY_BORDER_SIZE = 2;
     /**
-     * Stala uzywana podczas wykonywania sorttownia (sortownia wg. ilosci bomb)
+     * Stala uzywana podczas wykonywania sortownia (sortownia wg. ilosci bomb)
      */
     public static final int BY_NUMBER_OF_BOMBS = 3;
     /**
-     * Stala uzywana podczas wykonywania sorttownia (sortownia wg. czasu)
+     * Stala uzywana podczas wykonywania sortownia (sortownia wg. czasu)
      */
     public static final int BY_TIME = 4;
 
