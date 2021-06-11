@@ -9,23 +9,48 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+/** Reprezentuje ranking graczy
+ * @author Adrian Rubak
+ */
 public class Ranking {
     private List<RankingElement> listaRankingowa;
 
+    /**
+     * Stala uzywana podczas wykonywania sorttownia (sortownia wg. punktow)
+     */
     public static final int BY_SCORE = 1;
+    /**
+     * Stala uzywana podczas wykonywania sorttownia (sortownia wg. rozmiaru planszy)
+     */
     public static final int BY_BORDER_SIZE = 2;
+    /**
+     * Stala uzywana podczas wykonywania sorttownia (sortownia wg. ilosci bomb)
+     */
     public static final int BY_NUMBER_OF_BOMBS = 3;
+    /**
+     * Stala uzywana podczas wykonywania sorttownia (sortownia wg. czasu)
+     */
     public static final int BY_TIME = 4;
 
-
+    /**
+     * Konstruktor bezparametrowy
+     */
     public Ranking() {
         listaRankingowa = new LinkedList<RankingElement>();
     }
 
+    /**
+     * Dodaje element do rankingu
+     * @param rankingElement element rankingu (obiekt klasy ranking)
+     */
     public void addElement(RankingElement rankingElement){
         listaRankingowa.add(rankingElement);
     }
 
+    /**
+     * Czyta ranking z pliku o podanej nazwie
+     * @param filename nazwa pliku
+     */
     public void loadFromFile(String filename){
         FileReader fileReader;
         Scanner scanner;
@@ -42,6 +67,11 @@ public class Ranking {
         }
     }
 
+    /**
+     * Zapisuje ranking do pliku o podanej nazwie
+     * @param fileName - nazwa pliku
+     * @return FileWriter objekt
+     */
     public FileWriter saveToFile(String fileName){
         FileWriter file = null;
         try {
@@ -57,13 +87,11 @@ public class Ranking {
         return file;
     }
 
-    @Override
-    public String toString() {
-        return "Ranking{" +
-                "listaRankingowa=\n" + listaRankingowa.toString() +
-                '}';
-    }
-
+    /**
+     * Sortownie rankingu
+     * @param option pole po którym będziemy sortować
+     * @param growing true - sortowanie rosnące, false - sortowanie malejąca
+     */
     public void selectionSort(int option, boolean growing){
         int tmp;
         for(int i = 0; i < listaRankingowa.size(); i++){
@@ -94,6 +122,11 @@ public class Ranking {
         }
     }
 
+    /**
+     * Zamiana elementow w rankingu (wykorzystywane w sortowaniu)
+     * @param indexA index pierwszego elementu
+     * @param indexB index drugiego elementu
+     */
     private void swap(int indexA, int indexB){
         RankingElement tmp;
         tmp = listaRankingowa.get(indexA);
@@ -101,10 +134,10 @@ public class Ranking {
         listaRankingowa.set(indexB, tmp);
     }
 
-    public void clearRanking(){
-        this.getListaRankingowa().clear();
-    }
-
+    /**
+     * Getter zwracajacy liste rankingowa
+     * @return zwraca ranking
+     */
     public List<RankingElement> getListaRankingowa() {
         return listaRankingowa;
     }

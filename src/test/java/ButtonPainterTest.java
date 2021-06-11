@@ -8,7 +8,6 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class ButtonPainterTest {
-
     @Test
     @DisplayName("Button painting")
     void shouldPaintButton(){

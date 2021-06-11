@@ -7,6 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Panel przechowujacy tabele z rankingiem
+ */
 public class RankingPanel extends JPanel {
 
     JButton backToMenu = new JButton("Powrót!");
@@ -22,6 +25,10 @@ public class RankingPanel extends JPanel {
     private boolean growingSort = false;
     private JCheckBox setSortOption = new JCheckBox("Sortowanie rosnące");
 
+    /**
+     * Konstruktor
+     * @param parent - referencja do glownego okna
+     */
     public RankingPanel(MainFrame parent) {
 
         ranking.selectionSort(Ranking.BY_SCORE, false);
@@ -98,6 +105,11 @@ public class RankingPanel extends JPanel {
         });
     }
 
+    /**
+     * Sortuje tabele
+     * @param option - opcja sortownaia (po czym sortujemy)
+     * @param flag - flaga okreslajaca czy sortownanie jest malejace czy rosnace
+     */
     private void  sortTable(String option, boolean flag){
 
         if(option.equals(options[0])) {
@@ -122,6 +134,9 @@ public class RankingPanel extends JPanel {
         this.parent.repaint();
     }
 
+    /**
+     * Inicjalizuje ranking w tabeli
+     */
     private void initializeRankingTable(){
         Object[][] rowData = new Object[ranking.getListaRankingowa().size()][5];
         for(int i = 0; i < ranking.getListaRankingowa().size(); i++){
@@ -138,6 +153,9 @@ public class RankingPanel extends JPanel {
         };
     }
 
+    /**
+     * Odswierza tabele (np. po zmienie opcji sortowania)
+     */
     private void initializeScrollPane(){
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -152,6 +170,10 @@ public class RankingPanel extends JPanel {
         scrollPane.setBounds(55, 200, 530, 200);
     }
 
+    /**
+     * Rysuje napis Minesweper
+     * @param g- obiekt grafiki
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

@@ -11,6 +11,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Panel przed startem gry
+ */
 public class StartGamePanel extends JPanel {
 
     JButton backToMenu = new JButton("Powrot");
@@ -32,6 +35,10 @@ public class StartGamePanel extends JPanel {
     private JButton startGame = new JButton("Start Game");
     private int numberOfFields=36;
 
+    /**
+     * Ustawia tlo w panelu
+     * @param g - obiekt grafiki
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -39,8 +46,11 @@ public class StartGamePanel extends JPanel {
 
     }
 
+    /**
+     * Konstruktor
+     * @param parent - referencja do glownej ramki
+     */
     public StartGamePanel(MainFrame parent){
-
         this.setBackground(Color.darkGray);
         this.setLayout(null);
 
@@ -95,28 +105,19 @@ public class StartGamePanel extends JPanel {
         nickField.setHorizontalAlignment(JLabel.CENTER);
         nickField.setFont(new Font("Verdana",Font.BOLD, 16));
         this.add(nickField);
-
-
-
-
         this.add(startGame);
-
-
         this.add(fieldSlider);
         this.add(fieldChoose);
         this.add(valueSlider);
-
         this.add(numberBombs);
         this.add(bombChoose);
         this.add(valueBomb);
-
         this.add(backToMenu);
         this.add(textofStartGame);
         textofStartGame.setVisible(false);
         parent.getContentPane().add(this);
         parent.validate();
         parent.repaint();
-
 
         backToMenu.addActionListener(new ActionListener() {
             @Override
@@ -143,9 +144,6 @@ public class StartGamePanel extends JPanel {
             }
         });
 
-
-
-
         startGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -166,13 +164,7 @@ public class StartGamePanel extends JPanel {
                     thisPanel.remove(emptyNicknameLabel);
                     textofStartGame.setVisible(true);
                 }
-
             }
         });
-
-
-
     }
-
-
 }

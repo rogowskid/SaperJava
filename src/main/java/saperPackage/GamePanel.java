@@ -15,6 +15,9 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.Date;
 
+/**
+ * Klasa reprezentujaca panel gry
+ */
 public class GamePanel extends JPanel {
     public static int counterPink=0;
     JPanel topPanel = new JPanel();
@@ -42,30 +45,27 @@ public class GamePanel extends JPanel {
     GamePanel thisPanel = this;
     Field[] fields;
 
+    /**
+     * Konstuktor
+     * @param parent - referencja do obiektu ramki
+     * @param numberOfFields - liczba pol
+     * @param bombsNumber - liczba bomb
+     * @param playerNickname - nick gracza
+     */
     public GamePanel(MainFrame parent, int numberOfFields, int bombsNumber, String playerNickname) {
-
         this.playerNickname = playerNickname;
-
-
-
         timeLabel = new Stopwatch();
         parent.setSize(655, 838);
         this.setBackground(Color.gray);
         this.setLayout(null);
         parent.getContentPane().add(this);
-
         this.numberOfFields = numberOfFields;
         numberOfFieldsSqrt = (int)Math.sqrt(numberOfFields);
-
         scoreValue.setText("Score: 0");
-
         fields = new Field[numberOfFields];
         numBombs =bombsNumber;
         numflags = bombsNumber;
-
         mainBoardPanel.setLayout(new GridLayout((int) Math.sqrt(numberOfFields), (int) Math.sqrt(numberOfFields)));
-
-
         nickLabel = new JLabel("Nick: " + playerNickname);
         nickLabel.setBounds(0, 10, 200, 40);
         nickLabel.setForeground(Color.white);
@@ -163,6 +163,11 @@ public class GamePanel extends JPanel {
 
     }
 
+    /**
+     * Rozmieszcza bomby na planszy
+     * @param fields - tablica pol
+     * @param number_of_bombs - ilosc bomb do rozmieszczenia
+     */
     public static void generateBombs(Field[] fields, int number_of_bombs){
         Random random = new Random();
         int randValue;
@@ -179,6 +184,12 @@ public class GamePanel extends JPanel {
         }
     }
 
+    /**
+     * Sprawdza ile bomb jest wokol danego pola
+     * @param fields - tablica pol
+     * @param index - index konkretnego pola w tablicy
+     * @return liczba bomb wokol danego pola
+     */
     public static int checkNeighbor(Field[] fields, int index){
         int lengthSqrt = (int)Math.sqrt(fields.length);
         int counter = 0;
@@ -221,6 +232,12 @@ public class GamePanel extends JPanel {
         return counter;
     }
 
+    /**
+     * Sprawdza czy index jest w ostatniej kolumnie na plancszy z polami
+     * @param index - index
+     * @param length - length
+     * @return true - jestli index jest w ostatniej kolumnie, false jesli nie jest w ostatniej
+     */
     public static boolean isInLastColumn(int index, int length){
         for(int i = (int)Math.sqrt(length)-1; i < length; i += (int)Math.sqrt(length))
             if(index == i)
@@ -228,8 +245,16 @@ public class GamePanel extends JPanel {
         return false;
     }
 
+    /**
+     * Sprawdza czy gra zostala zakonczona
+     * @return true - jesli gra zostala zakonczona, false - jesli gra nadal trwa
+     */
     public boolean isGameOver() { return isGameOver; }
 
+    /**
+     * Ustawia czy gra zostala zakonczona
+     * @param gameOver - wartosc boolean informujaca o tym czy gra zostala zakonczona
+     */
     public void setGameOver(boolean gameOver) {
         isGameOver = gameOver;
     }
@@ -266,6 +291,10 @@ public class GamePanel extends JPanel {
 
     }
 
+    /**
+     * Funkcja odpowiadająca za co że pierwszym klikiem nie możemy trafić na bombe
+     * @param index - index pola w które klikamy
+     */
     public void firstClick(int index){
         int lengthSqrt = (int)Math.sqrt(fields.length);
 
@@ -309,13 +338,22 @@ public class GamePanel extends JPanel {
             fields[i].setValue(checkNeighbor(fields, i));
     }
 
+    /**
+     * Getter informujacy o tym czy nastapilo juz pierwsze klikniecie
+     * @return true - jesli nastapilo, false - jesli nie nastapilo
+     */
     public boolean isAfterFirstClick() {
         return afterFirstClick;
     }
 
+    /**
+     * Funkcja rekurencyjna odkrywajaca sasiednie pola
+     * do momentu kiedy napotka pole ktore ma wartosc rozna od zera
+     * @param index - index pola w ktore klikamy
+     */
     public void selectEmptyFields(int index){
 
-        if(fields[index].isChecked()){
+        if(fields[index].isChecked() || fields[index].isHasFlag()){
             return;
         }
 
@@ -359,12 +397,19 @@ public class GamePanel extends JPanel {
             selectEmptyFields(index - numberOfFieldsSqrt - 1);
     }
 
+    /**
+     * Funkcja ktora odkrywa wszyskie pola (wywoływana po zakończeniu gry)
+     */
     private void drawAllFields(){
         for(Field i : fields)
             if(i.isChecked() == false && i.isHasFlag() == false)
                 i.drawField();
     }
 
+    /**
+     * Ustawia czy nastapilo juz pierwsze klikniecie
+     * @param afterFirstClick
+     */
     public void setAfterFirstClick(boolean afterFirstClick) {
         this.afterFirstClick = afterFirstClick;
     }
