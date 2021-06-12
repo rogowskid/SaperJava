@@ -12,7 +12,7 @@ import java.net.URL;
 import org.apache.batik.swing.*;
 
 /**
- * Reorezebtuje pojedyncze pole na planszy gry
+ * Reprezebtuje pojedyncze pole na planszy gry
  */
 public class Field extends JPanel {
     private int intdex;

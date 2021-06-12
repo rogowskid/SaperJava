@@ -4,7 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+/**
+ * Funkcja Stopwatch jest  to stoper, ktory liczy ile zajmuje graczowi dana rozgrywka (czas liczony jest do wygrania
+ * gry lub przegrania poprzez natrafienie na bombe)
 
+ Zaimplementowalismy stoper tak aby liczył:
+ second_string - sekundy
+ minutes_string - minuty
+ hours_string - godziny
+
+/
+ */
 public class Stopwatch extends JLabel {
     JLabel timeLabel = new JLabel();
     int elapsedTime = 0;
@@ -19,6 +29,10 @@ public class Stopwatch extends JLabel {
 
 
     Stopwatch thisLabel = this;
+/**
+ * Funkcja jest wywoływana dopiero w momencie najcisniecia na pierwszy bloczek (actionPerformed)
+ * @param finalTime - jest to ostateczny czas rozgrywki
+ */
 
     public Timer tier = new Timer(1000, new ActionListener() {
         @Override
@@ -35,6 +49,9 @@ public class Stopwatch extends JLabel {
 
         }
     });
+/**
+ * @param Stopwatch stopuje licznik w momencie zakonczenia gry
+ */
 
     public Stopwatch() {
         this.setFont(new Font("Verdana", Font.PLAIN, 22));
