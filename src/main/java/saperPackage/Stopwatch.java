@@ -62,6 +62,10 @@ public class Stopwatch extends JLabel {
         this.setText("Time: " + hours_string+":"+minutes_string+":"+seconds_string);
     }
 
+    /**
+     * Zwraca ilosc sekund przez ktore uruchomiony był timer
+     * @return ilosc sekund rozgrywki
+     */
     public int getTimeInSeconds(){
         return hours * 3600 + minutes * 60 + seconds;
     }
