@@ -259,6 +259,10 @@ public class GamePanel extends JPanel {
         isGameOver = gameOver;
     }
 
+    /**
+     * Wyświetla przyciski po zkonczeniu gry dodaje gracza do rankingu, wyswietla komunikat o zakonczeniu gry
+     * @param check - czy gra ma zostac zakonczona
+     */
     public void setCloseGame(boolean check){
 
         System.out.println(timeLabel.getTimeInSeconds());
@@ -352,46 +356,35 @@ public class GamePanel extends JPanel {
      * @param index - index pola w ktore klikamy
      */
     public void selectEmptyFields(int index){
-
         if(fields[index].isChecked() || fields[index].isHasFlag()){
             return;
         }
-
         fields[index].setChecked(true);
         fields[index].drawField();
-
         if(fields[index].getValue() != 0){
             return;
         }
-
         //Po prawej
         if( (index+1 < fields.length) && !isInLastColumn(index, fields.length))
             selectEmptyFields(index+1);
-
         //Po lewej
         if((index % numberOfFieldsSqrt) != 0)
             selectEmptyFields(index-1);
-
         //Dół
         if((index + numberOfFieldsSqrt) < fields.length)
             selectEmptyFields(index + numberOfFieldsSqrt);
-
         //Góra
         if((index - numberOfFieldsSqrt) >= 0)
             selectEmptyFields(index - numberOfFieldsSqrt);
-
         //Dół prawo
         if((index + numberOfFieldsSqrt+1) < fields.length && !isInLastColumn(index, fields.length))
             selectEmptyFields(index + numberOfFieldsSqrt + 1);
-
         //Doł lewo
         if(index % numberOfFieldsSqrt != 0  && (index + numberOfFieldsSqrt-1) < fields.length)
             selectEmptyFields(index + numberOfFieldsSqrt - 1);
-
         //Góra prawo
         if((index - numberOfFieldsSqrt+1) >= 0 && !isInLastColumn(index, fields.length))
             selectEmptyFields(index - numberOfFieldsSqrt + 1);
-
         //Góra lewo
         if((index - numberOfFieldsSqrt-1) >= 0 && index % numberOfFieldsSqrt != 0)
             selectEmptyFields(index - numberOfFieldsSqrt - 1);
