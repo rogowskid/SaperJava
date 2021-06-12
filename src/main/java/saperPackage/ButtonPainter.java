@@ -9,8 +9,17 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Klasa edytujaca wyglad przycisk
+ * @author Adrian Rubak
+ */
 public class ButtonPainter {
 
+    /**
+     * Edytuje wyglad przycisk
+     * @param button - przycisk
+     * @return - przycisk z nowym wygladem
+     */
     public static JButton paintButton(JButton button){
         button.setBackground(new Color(164, 83, 129));
         button.setForeground(Color.white);
@@ -43,5 +52,4 @@ public class ButtonPainter {
         });
         return button;
     }
-
 }

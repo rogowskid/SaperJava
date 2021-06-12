@@ -15,30 +15,37 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Panel menu z opcjami do wyboru
+ */
 public class MenuPanel extends JPanel {
 
     JButton startGame;
     JButton quitGame;
     JButton rankingPanel;
     MenuPanel thisPanel = this;
-
     static BufferedImage image;
 
+    /**
+     * Generuje napis Minesweper
+     * @param g - obiekt grafiki
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, 0,0, this);
-
         Graphics2D graphics2D = (Graphics2D) g;
         graphics2D.setColor(new Color(95, 31, 67));
         graphics2D.setFont(new Font("Arial Hebrew", Font.BOLD | Font.ITALIC, 75));
         graphics2D.drawString("Minesweper", 100, 130);
         graphics2D.drawString("Minesweper", 100, 132);
         graphics2D.drawString("Minesweper", 100, 134);
-
-
     }
 
+    /**
+     * Konstruktor
+     * @param parent referencja do okna glownego
+     */
     public  MenuPanel(MainFrame parent) {
         this.setLayout(null);
         this.setBackground(Color.darkGray);
@@ -92,8 +99,5 @@ public class MenuPanel extends JPanel {
                 System.exit(0);
             }
         });
-
-
-
     }
 }
